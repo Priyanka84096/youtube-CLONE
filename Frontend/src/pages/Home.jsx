@@ -1,34 +1,81 @@
-import { useState, useEffect } from 'react';
-import Header from '../components/Header';
-import VideoList from '../components/VideoList';
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Filter from "./Filter";
+import { useNavigate } from "react-router-dom";
+import { setSelectedVideo } from "../store/slices/videoSlice";
 
-const sampleVideos = [
-    { "videoId": "video01", "title": "Learn React in 30 Minutes", "thumbnailUrl":
-    "https://i.ytimg.com/vi/Tn6PIQfg3DY/maxresdefault.jpg", "description": "A quick tutorial to get started with React.", "channelId": "channel01", "uploader": "user01", "views": 15200, "likes": 1023,
-    "dislikes": 45, "uploadDate": "2024-09-20", "channelName": "FreeCodeCamp", "comments": [ { "commentId": "comment01", "userId":
-    "user02", "text": "Great video! Very helpful.", "timestamp": "2024-09-21T08:30:00Z" } ] },
-    { "videoId": "video02", "title": "Learn Javascript in 1 Hour", "thumbnailUrl":
-    "https://i.ytimg.com/vi/GpAKQno8kec/maxresdefault.jpg", "description": "A quick tutorial to get started with Javascript.", "channelId": "channel02", "uploader": "user02", "views": 15200, "likes": 1023,
-    "dislikes": 45, "uploadDate": "2024-09-20", "channelName": "freeCodeCamp.org", "comments": [ { "commentId": "comment02", "userId":
-    "user03", "text": "Awesome video! I learned very quickly.", "timestamp": "2024-09-21T08:30:00Z" } ] }
-  ];
 
-function Home() {
-  const [videos, setVideos] = useState([]);
 
-  useEffect(() => {
-    // Replace with API call to fetch videos from backend
-    setVideos(sampleVideos);
-  }, []);
+const Home = () => {
+  const filteredVideos = useSelector((state) => state.video.filteredVideos);
+  const isVisible = useSelector((state) => state.header.isVisible);
+
+  const navigate = useNavigate();
+
+  //converts long number to readable format
+  function formatViews(views) {
+    if (views >= 1_000_000_000) {
+      return (views / 1_000_000_000).toFixed(1).replace(/\.0$/, "") + "B";
+    } else if (views >= 1_000_000) {
+      return (views / 1_000_000).toFixed(1).replace(/\.0$/, "") + "M";
+    } else if (views >= 1_000) {
+      return (views / 1_000).toFixed(1).replace(/\.0$/, "") + "k";
+    }
+    return views;
+  }
+
+  const videoClickHandler = (videoId) => {
+    navigate(`/videopage/${videoId}`);
+  }
 
   return (
-    <div>
-      <Header />
-      <main className="p-4">
-        <VideoList videos={videos} />
-      </main>
-    </div>
+    <>
+      <div
+        className={`p-20 screen-max-7:pt-44 screen-max-7:p-3
+        ${isVisible ? "pl-64" : "pl-24"} 
+        transition-all duration-300 `}
+      >
+
+        <Filter />
+
+        <div className="flex mt-5 flex-wrap gap-6 min-w-44 screen-max-9:gap-4 screen-max-7:gap-3 screen-max-4:gap-2">
+          {filteredVideos.length !== 0 &&
+            filteredVideos.map((video) => (
+              <div
+                onClick={() => videoClickHandler(video.videoId)}
+                key={video._id}
+                className={`w-80 screen-max-9:w-72 screen-max-7:w-full 
+            ${isVisible ? "screen-max-9:w-64" : "screen-max-9:w-72"}
+            bg-white rounded-lg shadow-lg overflow-hidden flex flex-col hover:shadow-xl`}
+              >
+                {/* thumbnail */}
+                <div className="relative">
+                  <img
+                    src={video.thumbnailUrl}
+                    alt="thumbnail"
+                    className="w-full h-48 screen-max-7:h-40 screen-max-4:h-32 object-cover"
+                  />
+                </div>
+
+                {/* video title and description */}
+                <div className="p-4 screen-max-4:p-3">
+                  <h3 className="font-semibold text-base screen-max-4:text-sm text-gray-900 mb-2 truncate">
+                    {video.title}
+                  </h3>
+                  <p className="text-sm screen-max-4:text-xs text-gray-600 truncate">
+                    {video.uploader}
+                  </p>
+                  <p className="text-sm screen-max-4:text-xs text-gray-600 flex">
+                    {formatViews(video.views)}{" "}
+                    <span className="ml-1">views</span>
+                  </p>
+                </div>
+              </div>
+            ))}
+        </div>
+      </div>
+    </>
   );
-}
+};
 
 export default Home;
