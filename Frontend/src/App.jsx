@@ -1,22 +1,22 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+
 import Home from './pages/Home'
-
-// import { addAllVideos } from './store/slices/videoSlice'
-
+import Header from "./pages/Header"
+import { addAllVideos } from './store/slices/videoSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
 // import { setIsLoginUsingToken, setUserName } from './store/slices/authSlice'
 
-
-
 function App() {
-  
-  // const dispatch = useDispatch();
+
+  const dispatch = useDispatch();
+
   // const isLogin = useSelector(state => state.auth.isLogin);
 
   //this will fetch all the videos from db and push it to the redux videos array
   useEffect(() => {
+
     const fetchAll = async () => {
       try {
         const result = await axios.get("http://localhost:4000/fetchAllVideos");
@@ -30,10 +30,12 @@ function App() {
       } catch (error) {
         console.log("Error fetching videos--", error);
       }
+
     };
 
     fetchAll();
   }, []);
+
 
 // //to check login status
 //   useEffect(() => {
@@ -68,8 +70,10 @@ function App() {
 
   return (
    <>
+
       <BrowserRouter>
-        {/* <Header/> */}
+
+        <Header/>
         <Routes>
           <Route path='/' element={<Home/>}/>
           {/* <Route path='/videopage/:videoId' element={<VideoPage />}/>
@@ -78,6 +82,7 @@ function App() {
           <Route path="/createChannel" element={<CreateChannel />}/> */}
         </Routes>
       </BrowserRouter>
+
    </>
   )
 }

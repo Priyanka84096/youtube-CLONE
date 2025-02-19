@@ -8,6 +8,7 @@ import { setSelectedVideo } from "../store/slices/videoSlice";
 
 const Home = () => {
   const filteredVideos = useSelector((state) => state.video.filteredVideos);
+  console.log("filteredVideos",filteredVideos);
   const isVisible = useSelector((state) => state.header.isVisible);
 
   const navigate = useNavigate();
@@ -48,6 +49,7 @@ const Home = () => {
             ${isVisible ? "screen-max-9:w-64" : "screen-max-9:w-72"}
             bg-white rounded-lg shadow-lg overflow-hidden flex flex-col hover:shadow-xl`}
               >
+
                 {/* thumbnail */}
                 <div className="relative">
                   <img
