@@ -3,6 +3,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Auth from './pages/Authentication'
 import Home from './pages/Home'
 import Header from "./pages/Header"
+import ChannelPage from './pages/ChannelPage'
+import CreateChannel from "./pages/CreateChannel"
 import { addAllVideos } from './store/slices/videoSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
@@ -77,9 +79,9 @@ function App() {
         <Routes>
           <Route path='/' element={<Home/>}/>
           {/* <Route path='/videopage/:videoId' element={<VideoPage />}/> */}
-          {/* <Route path='/channelpage/:channelId' element={<ChannelPage/>}/> */}
+          <Route path='/channelpage/:channelId' element={<ChannelPage/>}/>
           {!isLogin &&  <Route path="/login" element={<Auth />}/>}
-          {/* <Route path="/createChannel" element={<CreateChannel />}/> */}
+          <Route path="/createChannel" element={<CreateChannel />}/>
         </Routes>
       </BrowserRouter>
 
