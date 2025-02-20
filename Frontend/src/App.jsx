@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-
+import Auth from './pages/Authentication'
 import Home from './pages/Home'
 import Header from "./pages/Header"
 import { addAllVideos } from './store/slices/videoSlice'
@@ -12,7 +12,7 @@ function App() {
 
   const dispatch = useDispatch();
 
-  // const isLogin = useSelector(state => state.auth.isLogin);
+  const isLogin = useSelector(state => state.auth.isLogin);
 
   //this will fetch all the videos from db and push it to the redux videos array
   useEffect(() => {
@@ -76,10 +76,10 @@ function App() {
         <Header/>
         <Routes>
           <Route path='/' element={<Home/>}/>
-          {/* <Route path='/videopage/:videoId' element={<VideoPage />}/>
-          <Route path='/channelpage/:channelId' element={<ChannelPage/>}/>
+          {/* <Route path='/videopage/:videoId' element={<VideoPage />}/> */}
+          {/* <Route path='/channelpage/:channelId' element={<ChannelPage/>}/> */}
           {!isLogin &&  <Route path="/login" element={<Auth />}/>}
-          <Route path="/createChannel" element={<CreateChannel />}/> */}
+          {/* <Route path="/createChannel" element={<CreateChannel />}/> */}
         </Routes>
       </BrowserRouter>
 
