@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-// import Loader from "../loader/Loader";
-// import "./addVideo.css";
-// import AddFileButton from "./AddFileButton";
+import Loader from "./Loader";
+import "./addVideo.css";
+import AddFileButton from "./AddFileButton";
 
 
 const ChannelPage = () => {

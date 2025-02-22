@@ -4,11 +4,12 @@ import Auth from './pages/Authentication'
 import Home from './pages/Home'
 import Header from "./pages/Header"
 import ChannelPage from './pages/ChannelPage'
+import VideoPage from './pages/VideoPage'
 import CreateChannel from "./pages/CreateChannel"
 import { addAllVideos } from './store/slices/videoSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
-// import { setIsLoginUsingToken, setUserName } from './store/slices/authSlice'
+import { setIsLoginUsingToken, setUserName } from './store/slices/authSlice'
 
 function App() {
 
@@ -39,35 +40,35 @@ function App() {
   }, []);
 
 
-// //to check login status
-//   useEffect(() => {
-//       const isLoginCheck = async () => {
-//         const waitForMe = await axios.get("http://localhost:4000/islogin", {
-//           withCredentials: true,
-//         });
+// to check login status and to set the username in header
+  useEffect(() => {
+      const isLoginCheck = async () => {
+        const loggedInOrNot = await axios.get("http://localhost:4000/islogin", {
+          withCredentials: true,
+        });
 
-//         console.log("waitForMe--", waitForMe);
+        console.log("loggedInOrNot--", loggedInOrNot);
 
-//         if (waitForMe.status === 200) {
-//           console.log("user is logged in--", waitForMe);
-//           dispatch(setIsLoginUsingToken(waitForMe.data));
+        if (loggedInOrNot.status === 200) {
+          console.log("user is logged in--", loggedInOrNot);
+          dispatch(setIsLoginUsingToken(loggedInOrNot.data));
 
-//           //setting the username to the top using api & redux
-//           const user = await axios.get("http://localhost:4000/getUser", {
-//             withCredentials: true,
-//           })
+          //setting the username to the top using api & redux
+          const user = await axios.get("http://localhost:4000/getUser", {
+            withCredentials: true,
+          })
 
-//           if(user.status === 200){
-//             dispatch(setUserName(user.data.result.username));
-//         }
+          if(user.status === 200){
+            dispatch(setUserName(user.data.result.username));
+        }
 
-//         console.log("current login status-- ", waitForMe);
-//         return;
-//       };
-//     }
+        console.log("current login status-- ", loggedInOrNot);
+        return;
+      };
+    }
 
-//       isLoginCheck();
-//     }, []);
+      isLoginCheck();
+    }, []);
 
 
   return (
@@ -78,7 +79,7 @@ function App() {
         <Header/>
         <Routes>
           <Route path='/' element={<Home/>}/>
-          {/* <Route path='/videopage/:videoId' element={<VideoPage />}/> */}
+          <Route path='/videopage/:videoId' element={<VideoPage />}/>
           <Route path='/channelpage/:channelId' element={<ChannelPage/>}/>
           {!isLogin &&  <Route path="/login" element={<Auth />}/>}
           <Route path="/createChannel" element={<CreateChannel />}/>

@@ -36,7 +36,8 @@ export const fetchDataFromYoutubeAndPushToDb = async (req, res) => {
     for (const item of searchResponse.data.items) {
       try {
         // add delay between API calls
-        await sleep(1000); // 1 second delay between videos
+        // 1 second delay between videos
+        //  await sleep(1000);
 
         // fetch video details
         const videoResponse = await youtube.videos.list({
@@ -226,6 +227,8 @@ const fetchChannelDetailsAndSave = async (channelId) => {
 //fetching all videos from database
 export const fetchVideos = async (req, res) => {
       try {
+          // await fetchDataFromYoutubeAndPushToDb();
+
           const result = await Video.find({});
           res.status(200).json({result: result});
           return;

@@ -59,8 +59,8 @@ export const addVideosToChannel = async (req, res) => {
       const newVideo = new Video({
         videoId,
         title: videoFile.originalname, 
-        thumbnailUrl: "https://images.unsplash.com/photo-1611162616475-46b635cb6868?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", 
-        description: "default test description", // default description
+        thumbnailUrl: "https://images.unsplash.com/photo-1521302200778-33500795e128?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", 
+        description: " test description", // default description
         channelId,
         uploader: user.username, // default uploader name
         views: 0,
