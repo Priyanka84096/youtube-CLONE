@@ -43,7 +43,7 @@ const Header = () => {
   return (
     <>
       <div
-        className={`flex w-full z-20 transition-all duration-300 ${
+        className={`flex w-full z-20 transition-all duration-300 bg-dark ${
           isVisible && "pl-52 screen-max-7:pl-0"
         } fixed border-b justify-between bg-white px-6 py-3  screen-max-7:flex-col screen-max-7:items-center screen-max-7:gap-5`}
       >
@@ -99,7 +99,6 @@ const Header = () => {
               className="flex gap-2 rounded-full cursor-pointer hover:bg-gray-200 px-3 -mt-2"
             >
               <h1 className="text-lg mt-[4px] cursor-pointer">Sign In</h1>
-              <LogIn className="mt-2 screen-max-7:mt-0"/>
             </div>
           )}
         </div>
@@ -109,9 +108,7 @@ const Header = () => {
           {/* sidebar */}
       <Sidebar>
         <SidebarItem icon={<Home />} text="Home" />
-        <SidebarItem icon={<VideotapeIcon />} text="Your Videos" />
         <SidebarItem icon={<TvMinimalPlay />} text="Subscribed Channel" />
-        <SidebarItem icon={<History />} text="History" />
         <SidebarItem icon={<ThumbsUp />} text="Liked" />
       </Sidebar>
     </>

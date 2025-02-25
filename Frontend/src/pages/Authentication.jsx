@@ -113,104 +113,114 @@ const Auth = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen screen-max-7:pt-28">
-      <div className="bg-white p-8 rounded-xl shadow-2xl border border-gray-400 w-full max-w-sm">
-        <h2 className="text-2xl font-bold mb-6 text-center">
-          {isLogin ? "Login" : "Sign In"}
-        </h2>
-        <form onSubmit={submitHandler}>
-          {!isLogin && (
+    
+    <div className="flex items-center pt-32 justify-center min-h-screen bg-gradient-to-r from-purple-500 to-blue-500 screen-max-7:pt-44">
+        <div className="bg-white p-8 rounded-md shadow-2xl border border-gray-300 w-full max-w-md transform -translate-y-16 transition-transform duration-500 ease-in-out">
+          <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">
+            {isLogin ? "Login" : "Sign In"}
+          </h2>
+          <form onSubmit={submitHandler}>
+            {!isLogin && (
+              <div className="mb-4">
+                <label
+                  className="block text-gray-700 text-sm font-bold mb-2"
+                  htmlFor="username"
+                >
+                  Username
+                </label>
+                <input
+                  type="text"
+                  id="username"
+                  className="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  placeholder="Enter username"
+                  ref={usernameRef}
+                  required
+                />
+              </div>
+            )}
             <div className="mb-4">
               <label
                 className="block text-gray-700 text-sm font-bold mb-2"
                 htmlFor="email"
               >
-                Username
+                Email
               </label>
               <input
-                type="username"
-                id="username"
-                className="w-full px-3 py-2 border rounded-xl shadow-sm focus:outline-none focus:ring focus:border-blue-300"
-                placeholder="Enter username"
-                ref={usernameRef}
+                type="email"
+                id="email"
+                className="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                placeholder="Enter your email"
+                ref={emailRef}
                 required
               />
             </div>
-          )}
-          <div className="mb-4">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="email"
-            >
-              Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              className="w-full px-3 py-2 border rounded-xl shadow-sm focus:outline-none focus:ring focus:border-blue-300"
-              placeholder="Enter your email"
-              ref={emailRef}
-              required
-            />
-          </div>
-          <div className="mb-6">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="password"
-            >
-              Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              className="w-full px-3 py-2 border rounded-xl shadow-sm focus:outline-none focus:ring focus:border-blue-300"
-              placeholder="Enter your password"
-              ref={passRef}
-              required
-            />
-          </div>
-
-          {!isLogin && (
             <div className="mb-6">
               <label
                 className="block text-gray-700 text-sm font-bold mb-2"
-                htmlFor="conf-password"
+                htmlFor="password"
               >
-                Confirm Password
+                Password
               </label>
               <input
                 type="password"
-                id="conf-password"
-                className="w-full px-3 py-2 border rounded-xl shadow-sm focus:outline-none focus:ring focus:border-blue-300"
-                placeholder="Re-enter password"
-                ref={confirmPassRef}
+                id="password"
+                className="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                placeholder="Enter your password"
+                ref={passRef}
                 required
               />
             </div>
-          )}
-
-          <button
-            type="submit"
-            className="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded-xl hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300"
-          >
-            {isLogin ? "Login" : "Sign In"}
-          </button>
-          {!isLogin ? (
-            <>
-               <p className="mt-5 text-center">
-                Already have an account? <span className="hover:text-blue-500 cursor-pointer hover:underline" onClick={() => dispatch(loginSignupSwitchHandler())}>Login</span>
-               </p>
-            </>
-          ) : (
-            <>
-               <p className="mt-5 text-center">
-                Don't have an account? <span className="hover:text-blue-500 cursor-pointer hover:underline" onClick={() => dispatch(loginSignupSwitchHandler())}>Sign in</span>
-               </p>
-            </>
-          )}
-        </form>
-      </div>
+            {!isLogin && (
+              <div className="mb-6">
+                <label
+                  className="block text-gray-700 text-sm font-bold mb-2"
+                  htmlFor="conf-password"
+                >
+                  Confirm Password
+                </label>
+                <input
+                  type="password"
+                  id="conf-password"
+                  className="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  placeholder="Re-enter password"
+                  ref={confirmPassRef}
+                  required
+                />
+              </div>
+            )}
+            <button
+              type="submit"
+              className="w-full bg-purple-600 text-white font-bold py-2 px-4 rounded-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500"
+            >
+              {isLogin ? "Login" : "Sign In"}
+            </button>
+            <div className="mt-5 text-center">
+              {isLogin ? (
+                <>
+                  Don't have an account?{" "}
+                  <span
+                    className="text-purple-500 hover:underline cursor-pointer"
+                    onClick={() => dispatch(loginSignupSwitchHandler())}
+                  >
+                    Sign in
+                  </span>
+                </>
+              ) : (
+                <>
+                  Already have an account?{" "}
+                  <span
+                    className="text-purple-500 hover:underline cursor-pointer"
+                    onClick={() => dispatch(loginSignupSwitchHandler())}
+                  >
+                    Login
+                  </span>
+                </>
+              )}
+            </div>
+          </form>
+        </div>
     </div>
+
   );
 };
 

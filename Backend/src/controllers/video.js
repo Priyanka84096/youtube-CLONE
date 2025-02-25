@@ -21,7 +21,7 @@ export const fetchDataFromYoutubeAndPushToDb = async (req, res) => {
     const searchResponse = await youtube.search.list({
       part: "snippet",
       type: "video",
-      maxResults: 100,
+      maxResults: 50,
       // q: "",
     });
 
@@ -131,6 +131,7 @@ export const fetchDataFromYoutubeAndPushToDb = async (req, res) => {
   }
 };
 
+
 //disliking a video
 export const dislikeVideo = async (req, res) => {
   try {
@@ -227,7 +228,6 @@ const fetchChannelDetailsAndSave = async (channelId) => {
 //fetching all videos from database
 export const fetchVideos = async (req, res) => {
       try {
-          // await fetchDataFromYoutubeAndPushToDb();
 
           const result = await Video.find({});
           res.status(200).json({result: result});
@@ -253,14 +253,14 @@ export const getVideoById = async (req, res) => {
 
 //get video by _id
 export const getVideoBy_id = async (req, res) => {
-  try{
-    const {videoId} = req.params;
-    // console.log("---------------------", videoId);
-    const video = await Video.findOne({_id: videoId});
-    res.status(200).json({result: video});
-    return; 
-}
-catch(error){
-    res.status(500).json({msg: "Failed to fetch video from database"})
-  }
+    try{
+      const {videoId} = req.params;
+      // console.log("---------------------", videoId);
+      const video = await Video.findOne({_id: videoId});
+      res.status(200).json({result: video});
+      return; 
+    }
+    catch(error){
+      res.status(500).json({msg: "Failed to fetch video from database"})
+    }
 }

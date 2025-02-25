@@ -21,15 +21,43 @@ function App() {
   useEffect(() => {
 
     const fetchAll = async () => {
+
       try {
-        const result = await axios.get("http://localhost:4000/fetchAllVideos");
 
-        console.log("fetched videos:-", result);
+        const videoResult = await axios.get("http://localhost:4000/fetchAllVideos");
 
-        if (result.status === 200) {
-          dispatch(addAllVideos(result.data.result));
-          return console.log("fetch successful");
-        }
+        console.log("fetched videos:-", videoResult);
+
+          if (videoResult.status === 200) {
+
+            if(videoResult.data.result.length === 0){
+
+                try{
+                      const result = await axios.get("http://localhost:4000/fetchAndPushVideos");
+          
+                      if(result.status === 200){
+
+                          console.log("videos fetched and pushed to db-- ", result)
+
+                          const fetchingAfterPush = await axios.get("http://localhost:4000/fetchAllVideos");
+
+                          if(fetchingAfterPush.status === 200){
+                              dispatch(addAllVideos(fetchingAfterPush.data.result));
+                              return console.log("fetch successful");
+                          }
+                      }
+
+                }catch(error){
+                      return console.log("Error fetching and pushing data-- ", error);
+                }
+            }
+            else{
+                console.log("video Result--- ", videoResult.data.result)
+      
+                dispatch(addAllVideos(videoResult.data.result));
+                return console.log("fetch successful");
+            }
+          }
       } catch (error) {
         console.log("Error fetching videos--", error);
       }
@@ -68,10 +96,10 @@ function App() {
     }
 
       isLoginCheck();
-    }, []);
+}, []);
 
 
-  return (
+return (
    <>
 
       <BrowserRouter>
